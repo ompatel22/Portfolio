@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-0: #fbfaf7;
+    --bg-1: #f3eee6;
+    --bg-2: #ebe4d7;
+    --txt: #171717;
+    --muted: #5f5a52;
+    --card: rgba(255, 252, 246, 0.88);
+    --card-strong: rgba(255, 255, 255, 0.96);
+    --line: rgba(23, 23, 23, 0.1);
+    --accent: #1f6f5f;
+    --accent-soft: rgba(31, 111, 95, 0.1);
+  }
+
+  .dark {
+    --bg-0: #151515;
+    --bg-1: #1c1a18;
+    --bg-2: #22201d;
+    --txt: #f3efe8;
+    --muted: #c9c1b7;
+    --card: rgba(29, 27, 25, 0.88);
+    --card-strong: rgba(38, 35, 32, 0.96);
+    --line: rgba(243, 239, 232, 0.11);
+    --accent: #78c4b4;
+    --accent-soft: rgba(120, 196, 180, 0.12);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section[id] {
+    scroll-margin-top: 7.5rem;
+  }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--txt);
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.8) 0%, transparent 28%),
+      linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 52%, var(--bg-2) 100%);
+    @apply antialiased;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.5);
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .glass-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 40px rgba(23, 23, 23, 0.05);
+    @apply rounded-[28px];
+  }
+
+  .dark .glass-card {
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .section-shell {
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--card-strong) 84%, transparent 16%);
+    box-shadow: 0 12px 32px rgba(23, 23, 23, 0.04);
+    @apply rounded-[26px] p-6 md:p-7;
+  }
+
+  .section-label {
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    @apply mono text-[10px] uppercase mb-4;
+  }
+
+  .tag {
+    border: 1px solid color-mix(in srgb, var(--line) 88%, #fff 12%);
+    background: color-mix(in srgb, var(--card-strong) 88%, transparent 12%);
+    @apply mono text-[11px] px-2.5 py-1 rounded-full;
+  }
+
+  .mesh-overlay {
+    background-image:
+      linear-gradient(rgba(23, 23, 23, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 23, 23, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: radial-gradient(circle at center, #000 20%, transparent 74%);
+  }
+
+  .dark .mesh-overlay {
+    background-image:
+      linear-gradient(rgba(243, 239, 232, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243, 239, 232, 0.05) 1px, transparent 1px);
+  }
+
+  .display-serif {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  .paper-panel {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 252, 246, 0.95) 100%);
+    border: 1px solid color-mix(in srgb, var(--line) 90%, #fff 10%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+
+  .dark .paper-panel {
+    background: linear-gradient(180deg, rgba(40, 37, 34, 0.95) 0%, rgba(29, 27, 25, 0.98) 100%);
+  }
+
+  .pixel-cat-root {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: visible;
+    width: 5rem;
+    height: 5rem;
+    outline: none;
+  }
+
+  .pixel-cat-root:focus-visible {
+    border-radius: 1rem;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent 82%);
+  }
+
+  .pixel-cat-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pixel-cat-root img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.16));
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  }
+
+  .pixel-cat-root img.pixel-cat-alert-img,
+  .pixel-cat-root img.pixel-cat-blink-img {
+    transition: none;
+  }
+
+  .pixel-cat-root img.pixel-cat-paw-img {
+    transition: none;
+  }
+
+  .pixel-cat-root img.pixel-cat-awake-img,
+  .pixel-cat-root img.pixel-cat-alert-img,
+  .pixel-cat-root img.pixel-cat-blink-img {
+    transform: translateY(-8px) scale(1.05);
+  }
+
+  .pixel-cat-root.pixel-cat-pawing img.pixel-cat-paw-img {
+    animation: pixel-cat-claw 0.35s ease-out;
+    transform: translateY(-8px) scale(1.05);
+  }
+
+  @keyframes pixel-cat-claw {
+    0% { transform: translateY(-8px) scale(1.05); }
+    25% { transform: translateY(-8px) scale(1.08) translateX(2px); }
+    50% { transform: translateY(-8px) scale(1.12) translateX(4px); }
+    75% { transform: translateY(-8px) scale(1.06) translateX(2px); }
+    100% { transform: translateY(-8px) scale(1.05); }
+  }
+
+  .pixel-cat-zz {
+    position: absolute;
+    top: 26%;
+    left: 45%;
+    right: auto;
+    pointer-events: none;
+    transform-origin: center bottom;
+    transition: opacity 180ms ease;
+  }
+
+  .pixel-cat-zz-fade {
+    opacity: 0;
+  }
+
+  .pixel-cat-z1,
+  .pixel-cat-z2,
+  .pixel-cat-z3 {
+    position: absolute;
+    font-weight: bold;
+    left: 0;
+    bottom: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: lowercase;
+    color: var(--muted);
+    line-height: 1;
+  }
+
+  .pixel-cat-z1 {
+    font-size: 0.7rem;
+    animation: pixel-cat-float-z1 2.2s ease-in-out infinite;
+  }
+
+  .pixel-cat-z2 {
+    left: 0.55rem;
+    bottom: 0.08rem;
+    font-size: 0.78rem;
+    animation: pixel-cat-float-z2 2.2s ease-in-out 0.4s infinite;
+  }
+
+  .pixel-cat-z3 {
+    left: 1.05rem;
+    bottom: 0.18rem;
+    font-size: 0.88rem;
+    animation: pixel-cat-float-z3 2.2s ease-in-out 0.8s infinite;
+  }
+
+  @keyframes pixel-cat-float-z1 {
+    0% { opacity: 0; transform: translateY(0) scale(0.7); }
+    25% { opacity: 0.7; }
+    100% { opacity: 0; transform: translateY(-6px) scale(1); }
+  }
+
+  @keyframes pixel-cat-float-z2 {
+    0% { opacity: 0; transform: translateY(0) scale(0.7); }
+    25% { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-8px) scale(1); }
+  }
+
+  @keyframes pixel-cat-float-z3 {
+    0% { opacity: 0; transform: translateY(0) scale(0.7); }
+    25% { opacity: 0.5; }
+    100% { opacity: 0; transform: translateY(-10px) scale(1); }
+  }
+}
