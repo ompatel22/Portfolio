@@ -12,7 +12,6 @@ A modern, dark-themed developer portfolio built with React + Vite + Tailwind CSS
 - ⌘ Command palette (Ctrl+K / Cmd+K) for quick navigation
 - 🖱️ Custom animated cursor (desktop)
 - 📱 Fully responsive (mobile-first)
-- 🚀 Ready to deploy on Vercel
 
 ## Tech Stack
 
@@ -36,38 +35,3 @@ npm run build
 # Preview production build
 npm run preview
 ```
-
-## Deploying to Vercel
-
-1. Push to GitHub
-2. Import repo in [vercel.com](https://vercel.com)
-3. Framework preset: **Vite**
-4. Deploy — done!
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── CustomCursor.jsx     # Animated cursor
-│   ├── Navbar.jsx           # Animated hide/show navbar
-│   └── CommandPalette.jsx   # Ctrl+K navigation
-├── sections/
-│   ├── Hero.jsx             # Typing hero + terminal card
-│   ├── Journey.jsx          # Experience timeline
-│   ├── Build.jsx            # Projects grid
-│   ├── Stack.jsx            # Skills with bars
-│   └── Connect.jsx          # Contact + socials
-├── hooks/
-│   ├── useTheme.js          # Dark/light toggle
-│   └── useScrollDirection.js # Navbar hide on scroll
-├── data/
-│   └── portfolio.js         # All content (edit this!)
-├── App.jsx
-├── main.jsx
-└── index.css
-```
-
-## Customization
-
-All content lives in `src/data/portfolio.js` — update your info, projects, and skills there.
