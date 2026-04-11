@@ -3,9 +3,9 @@ export const personalInfo = {
   age: 21,
   tagline: "Engineer",
   bio: [
-    "B.Tech. in Information Technology at Dharmsinh Desai University (2022-2026), CPI: 9.57/10.0.",
+    "B.Tech. in Information Technology at Dharmsinh Desai University (2022-2026), CPI: 9.50/10.0.",
     "Software Engineer Intern at Benzinga (Dec 2025-Present), developing and enhancing backend services in Go and Java, supporting migration work, and resolving production bugs.",
-    "Previously Software Engineer Intern at Mastercard (May 2025-July 2025), where I worked on a distributed reporting system using Apache Spark, Hadoop, Kafka, NiFi, Hive, Scala, and AWS S3.",
+    "Previously Software Engineer Intern at Mastercard (May 2025-July 2025), where I worked on a distributed reporting system using Apache Spark, Apache Hadoop, Apache Kafka, Apache NiFi, Apache Hive, Scala, AWS S3 and Spring Boot.",
   ],
   email: "omupatel22@gmail.com",
   location: "Anand, Gujarat, India",
@@ -25,6 +25,7 @@ export const experiences = [
     companyUrl: "https://benzinga.com",
     role: "Software Engineer Intern",
     type: "Internship",
+    location: "Detroit, MI, US | Remote",
     period: "12.2025—Present",
     tech: ["Go", "Java", "REST APIs", "WebSockets", "Webhooks", "GitLab"],
     points: [
@@ -38,8 +39,9 @@ export const experiences = [
     companyUrl: "https://mastercard.com",
     role: "Software Engineer Intern",
     type: "Summer Internship",
+    location: "Vadodara, Gujarat, India",
     period: "05.2025—07.2025",
-    tech: ["Apache Spark", "Hadoop", "Kafka", "NiFi", "Hive", "Scala", "AWS S3", "Spring Boot"],
+    tech: ["Apache Spark", "Apache Hadoop", "Apache Kafka", "Apache NiFi", "Apache Hive", "Scala", "AWS S3", "Spring Boot"],
     points: [
       "Engineered a scalable big data–driven distributed reporting system.",
       "Designed reusable Spark-based jobs for dynamic data querying and encrypted report generation.",
@@ -54,7 +56,7 @@ export const education = [
     institution: "Dharmsinh Desai University",
     degree: "B.Tech · Information Technology",
     period: "2022—2026",
-    score: "CPI: 9.57 / 10.0",
+    score: "CPI: 9.50 / 10.0",
   },
   {
     institution: "D.N. High School",
@@ -81,8 +83,8 @@ export const projects = [
     {
     title: "Distributed Reporting System",
     subtitle: "Big Data Pipeline · Mastercard",
-    description: "Scalable distributed reporting pipeline with encrypted chunk generation, Kafka async workflows, NiFi data pipelines, and AWS S3 storage. Built during internship at Mastercard.",
-    tech: ["Apache Spark", "Kafka", "NiFi", "Scala", "AWS S3"],
+    description: "Scalable distributed reporting pipeline with encrypted chunk generation, Apache Kafka async workflows, Apache NiFi data pipelines, and AWS S3 storage. Built during internship at Mastercard.",
+    tech: ["Apache Spark", "Apache Hadoop", "Apache Kafka", "Apache NiFi", "Apache Hive", "Scala", "AWS S3", "Spring Boot"],
     links: {},
   },
   {
@@ -95,7 +97,7 @@ export const projects = [
   {
     title: "BlogIt",
     subtitle: "Full-Stack Blog Application",
-    description: "Blog platform with likes, comments, and category-based discovery. Spring Boot REST backend connected to PostgreSQL with Cloudinary for media.",
+    description: "Blog platform with likes, comments, and category-based discovery. React frontend, Spring Boot REST backend connected to PostgreSQL with Cloudinary for media.",
     tech: ["Spring Boot", "React", "PostgreSQL", "Cloudinary"],
     links: { frontend: "https://github.com/ompatel22/BlogIt-Frontend", backend: "https://github.com/ompatel22/BlogIt-Backend" },
   },
@@ -140,6 +142,10 @@ export const achievements = [
   "Programming using Java Certification — Infosys Springboard",
   "Solved 200+ problems on LeetCode",
   "4-star rating in Problem Solving & 5-star rating in C++ on HackerRank",
+]
+
+export const hobbies = [
+  "Problem Solving","Coding","Personal Finance", "Stock Investing", "Music", "Travel"
 ]
 
 export const quotes = [

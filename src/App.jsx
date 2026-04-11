@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useTheme } from './hooks/useTheme'
 import Navbar from './components/Navbar'
 import { motion } from 'framer-motion'
-import { Code2, BrainCircuit, Database, Workflow, Cloud, ShieldCheck } from 'lucide-react'
+import { Code2, BrainCircuit, Database, Workflow, Cloud, ShieldCheck, Search, Terminal } from 'lucide-react'
 import { FaGithub, FaLinkedin, FaEnvelope, FaLaptopCode, FaCode, FaTrophy, FaAws } from 'react-icons/fa'
 import {
   SiGo,
@@ -29,7 +29,11 @@ import {
   SiGit,
   SiPostman,
 } from 'react-icons/si'
-import { personalInfo, experiences, education, projects, skills } from './data/portfolio'
+import { personalInfo, experiences, education, projects, skills, hobbies } from './data/portfolio'
+import Magnetic from './components/ui/Magnetic'
+import CommandPalette from './components/ui/CommandPalette'
+import InteractiveTerminal from './components/ui/InteractiveTerminal'
+import TechMarquee from './components/ui/TechMarquee'
 
 const fade = {
   hidden: { opacity: 0, y: 22 },
@@ -44,7 +48,7 @@ function Section({ children, id, shouldAnimate = true }) {
       initial={shouldAnimate ? 'hidden' : false}
       whileInView={shouldAnimate ? 'show' : undefined}
       viewport={shouldAnimate ? { once: true, margin: '-40px' } : undefined}
-      className="section-shell"
+      className="section-shell h-full"
     >
       {children}
     </motion.section>
@@ -67,14 +71,24 @@ function MastercardMark({ className = '' }) {
   )
 }
 
+function BenzingaMark({ className = '' }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 align-middle ${className}`}>
+      <span className="relative inline-flex h-3.5 w-[22px] items-center justify-center rounded-[3px] bg-[#3F83F8]">
+        <span className="text-[9px] font-bold text-white leading-none font-sans tracking-tight">BZ</span>
+      </span>
+      <span>Benzinga</span>
+    </span>
+  )
+}
+
 export default function App() {
   const { isDark, toggle } = useTheme()
   const shouldAnimate = true
   const audioContextRef = useRef(null)
   const themeAudioRef = useRef(null)
   const [typedName, setTypedName] = useState('')
-  const [catState, setCatState] = useState('sleeping')
-  const [catHovered, setCatHovered] = useState(false)
+  const [catState, setCatState] = useState('idle')
   const [catPawing, setCatPawing] = useState(false)
   const pointerRef = useRef(null)
   const pointerTargetRef = useRef({ x: 0, y: 0 })
@@ -166,13 +180,13 @@ export default function App() {
   const handleCatTap = () => {
     if (catPawing) return
     setCatPawing(true)
-    setCatState('pawing')
+    setCatState('clicked')
     playCatTapTone()
 
     window.setTimeout(() => {
       setCatPawing(false)
-      setCatState('sleeping')
-    }, 350)
+      setCatState('idle')
+    }, 400)
   }
 
   useEffect(() => {
@@ -209,25 +223,6 @@ export default function App() {
 
     return () => window.clearTimeout(timeoutId)
   }, [])
-
-  useEffect(() => {
-    if (catPawing) return
-
-    if (catState === 'waking') {
-      const timer = window.setTimeout(() => setCatState('alert'), 220)
-      return () => window.clearTimeout(timer)
-    }
-
-    if (catState === 'alert') {
-      const timer = window.setTimeout(() => setCatState('blinking'), 1700 + Math.random() * 1800)
-      return () => window.clearTimeout(timer)
-    }
-
-    if (catState === 'blinking') {
-      const timer = window.setTimeout(() => setCatState('alert'), 220 + Math.random() * 100)
-      return () => window.clearTimeout(timer)
-    }
-  }, [catState, catPawing])
 
   useEffect(() => {
     const pointer = pointerRef.current
@@ -316,6 +311,8 @@ export default function App() {
         <div className={`pointer-events-none absolute inset-0 mesh-overlay ${isDark ? 'opacity-25' : 'opacity-60'}`} />
 
         <Navbar isDark={isDark} toggle={handleThemeToggle} />
+        <CommandPalette />
+        <InteractiveTerminal />
 
         <main id="top" className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-20 space-y-6">
 
@@ -344,20 +341,24 @@ export default function App() {
 
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <a
-                    href={personalInfo.socials.email}
-                    className="mono text-xs px-4 py-2 rounded-full bg-[color:var(--txt)] text-[color:var(--bg-0)] hover:opacity-90 transition-opacity"
-                  >
-                    Contact Me
-                  </a>
-                  <a
-                    href={personalInfo.socials.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mono text-xs px-4 py-2 rounded-full border border-[color:var(--line)] hover:bg-[color:var(--accent-soft)] transition-colors"
-                  >
-                    GitHub
-                  </a>
+                  <Magnetic strength={0.2}>
+                    <a
+                      href={personalInfo.socials.email}
+                      className="mono text-xs px-4 py-2 rounded-full bg-[color:var(--txt)] text-[color:var(--bg-0)] hover:opacity-90 transition-opacity block"
+                    >
+                      Contact Me
+                    </a>
+                  </Magnetic>
+                  <Magnetic strength={0.2}>
+                    <a
+                      href={personalInfo.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mono text-xs px-4 py-2 rounded-full border border-[color:var(--line)] hover:bg-[color:var(--accent-soft)] transition-colors block"
+                    >
+                      GitHub
+                    </a>
+                  </Magnetic>
                 </div>
               </div>
 
@@ -367,7 +368,7 @@ export default function App() {
                   <div className="relative rounded-[2rem] border border-[color:var(--line)] bg-[color:var(--card-strong)] p-3 shadow-xl">
                     <div className="overflow-hidden rounded-[1.5rem] border border-[color:var(--line)] bg-stone-100 dark:bg-stone-900 aspect-[4/5]">
                       <img
-                        src="/images/profile2.jpg"
+                        src="/images/profile3.jpg"
                         alt="Profile picture of Om Patel"
                         className="h-full w-full object-cover object-center"
                       />
@@ -375,7 +376,9 @@ export default function App() {
                     <div className="mt-3 flex items-center justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold leading-tight">Om Patel</p>
-                        <p className="mono text-[11px] text-[color:var(--muted)]">Software Engineer Intern at Benzinga | Upcoming Software Engineer 1 at Mastercard</p>
+                        <p className="mono text-[11px] text-[color:var(--muted)]">SDE Intern at Benzinga,</p>
+                        <p className="mono text-[11px] text-[color:var(--muted)]">Ex-SDE Intern at Mastercard,</p>
+                        <p className="mono text-[11px] text-[color:var(--muted)]">Upcoming SDE-1 at Mastercard</p>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -388,8 +391,8 @@ export default function App() {
             </div>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            {/* About */}
+          {/* 1. About & 2. Connect Grid */}
+          <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
             <Section id="about" shouldAnimate={shouldAnimate}>
               <Label>About</Label>
               <div className="space-y-3">
@@ -399,53 +402,38 @@ export default function App() {
               </div>
             </Section>
 
-            {/* Connect */}
             <Section id="contact" shouldAnimate={shouldAnimate}>
               <Label>Connect</Label>
               <div className="flex flex-col gap-2.5">
                 {contactItems.map(s => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target={s.href.startsWith('mailto') ? '_self' : '_blank'}
-                    rel="noopener noreferrer"
-                    className="mono text-xs px-3 py-2 rounded-xl border border-[color:var(--line)] hover:bg-[color:var(--accent-soft)] transition-colors inline-flex items-center gap-2"
-                  >
-                    <s.icon size={13} className="text-[color:var(--muted)]" />
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-            </Section>
-
-            {/* Education */}
-            <Section id="education" shouldAnimate={shouldAnimate}>
-              <Label>Education</Label>
-              <div className="space-y-5">
-                {education.map((ed, i) => (
-                  <div key={i}>
-                    <p className="text-sm font-semibold mb-0.5">{ed.institution}</p>
-                    <p className="mono text-xs text-[color:var(--muted)]">{ed.degree}</p>
-                    <p className="mono text-xs text-[color:var(--muted)]">{ed.period}</p>
-                    <p className="mono text-xs text-[color:var(--muted)]">{ed.score}</p>
-                  </div>
+                  <Magnetic key={s.label} strength={0.15}>
+                    <a
+                      href={s.href}
+                      target={s.href.startsWith('mailto') ? '_self' : '_blank'}
+                      rel="noopener noreferrer"
+                      className="mono text-xs px-3 py-2 rounded-xl border border-[color:var(--line)] hover:bg-[color:var(--accent-soft)] transition-colors inline-flex items-center gap-2 w-full"
+                    >
+                      <s.icon size={13} className="text-[color:var(--muted)]" />
+                      {s.label}
+                    </a>
+                  </Magnetic>
                 ))}
               </div>
             </Section>
           </div>
 
-          {/* Experience */}
+          {/* 3. Experience */}
           <Section id="experience" shouldAnimate={shouldAnimate}>
               <Label>Experience</Label>
               <div className="space-y-8">
                 {experiences.map((exp, i) => (
                   <div key={i} className="border border-[color:var(--line)] rounded-[24px] p-4 md:p-5 bg-[color:var(--card-strong)]">
                     <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="text-base font-semibold hover:opacity-70 transition-opacity inline-flex items-center">
-                      {exp.company === 'Mastercard' ? <MastercardMark /> : exp.company}
+                      {exp.company === 'Mastercard' ? <MastercardMark /> : exp.company === 'Benzinga' ? <BenzingaMark /> : exp.company}
                     </a>
                     <div className="mt-1 mb-2.5 space-y-0.5">
                       <p className="mono text-xs text-[color:var(--muted)]">{exp.role}</p>
-                    <p className="mono text-xs text-[color:var(--muted)]">{exp.type} · {exp.period}</p>
+                    <p className="mono text-xs text-[color:var(--muted)]">{exp.type} · {exp.location} · {exp.period}</p>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     {exp.tech.map(t => (
@@ -465,7 +453,7 @@ export default function App() {
             </div>
           </Section>
 
-          {/* Projects */}
+          {/* 4. Projects */}
           <Section id="projects" shouldAnimate={shouldAnimate}>
             <Label>Projects</Label>
             <div className="grid md:grid-cols-2 gap-4">
@@ -503,30 +491,59 @@ export default function App() {
             </div>
           </Section>
 
-          <div className="grid lg:grid-cols-1 gap-6">
-            {/* Skills */}
-            <Section id="skills" shouldAnimate={shouldAnimate}>
-              <Label>Skills</Label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-                {skills.map(s => (
-                  <div key={s} className="flex items-center gap-2 rounded-[18px] px-3 py-2 border border-[color:var(--line)] bg-[color:var(--card-strong)]">
-                    <span className="w-6 h-6 rounded-lg bg-[color:var(--accent-soft)] flex items-center justify-center">
-                      {(() => {
-                        const Icon = skillIconMap[s]
-                        return Icon ? <Icon size={14} className="text-[color:var(--accent)]" /> : null
-                      })()}
-                    </span>
-                    <span className="mono text-[11px]">{s}</span>
+          {/* 5. Education & 6. Beyond Code Grid */}
+          <div className="grid lg:grid-cols-2 gap-6">
+            <Section id="education" shouldAnimate={shouldAnimate}>
+              <Label>Education</Label>
+              <div className="space-y-5">
+                {education.map((ed, i) => (
+                  <div key={i}>
+                    <p className="text-sm font-semibold mb-0.5">{ed.institution}</p>
+                    <p className="mono text-xs text-[color:var(--muted)]">{ed.degree}</p>
+                    <p className="mono text-xs text-[color:var(--muted)]">{ed.period}</p>
+                    <p className="mono text-xs text-[color:var(--muted)]">{ed.score}</p>
+                  </div>
+                ))}
+              </div>
+            </Section>
+
+            <Section id="hobbies" shouldAnimate={shouldAnimate}>
+              <Label>Interests</Label>
+              <div className="grid grid-cols-2 gap-3">
+                {hobbies.map(hobby => (
+                  <div key={hobby} className="mono text-xs px-3 py-2 rounded-xl border border-[color:var(--line)] bg-[color:var(--card-strong)]/50 text-[color:var(--muted)] flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]" />
+                    {hobby}
                   </div>
                 ))}
               </div>
             </Section>
           </div>
 
+          {/* 7. Skills */}
+          <Section id="skills" shouldAnimate={shouldAnimate}>
+            <Label>Skills</Label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {skills.map(s => (
+                <div key={s} className="flex items-center gap-2 rounded-[18px] px-3 py-2 border border-[color:var(--line)] bg-[color:var(--card-strong)]">
+                  <span className="w-6 h-6 rounded-lg bg-[color:var(--accent-soft)] flex items-center justify-center">
+                    {(() => {
+                      const Icon = skillIconMap[s]
+                      return Icon ? <Icon size={14} className="text-[color:var(--accent)]" /> : null
+                    })()}
+                  </span>
+                  <span className="mono text-[11px]">{s}</span>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <TechMarquee />
+
           {/* Footer */}
           <footer className="pt-4 pb-4">
             <p className="mono text-xs text-[color:var(--muted)]">
-              © {new Date().getFullYear()} Om Patel · Built with love ❤️
+              © {new Date().getFullYear()} Om Patel
             </p>
           </footer>
 
@@ -539,20 +556,18 @@ export default function App() {
         >
           <button
             type="button"
-            className={`pixel-cat-root ${catState === 'pawing' ? 'pixel-cat-pawing' : ''} ${catState === 'blinking' ? 'pixel-cat-blinking' : ''} ${catState === 'alert' || catState === 'waking' ? 'pixel-cat-awake' : ''}`}
+            className="pixel-cat-root"
             onClick={handleCatTap}
             onMouseEnter={() => {
-              setCatHovered(true)
-              if (catState === 'sleeping') {
-                setCatState('waking')
-              } else if (catState !== 'pawing') {
-                setCatState('alert')
-              }
+              if (catState === 'clicked') return
+              setCatState('hover-1') // image_3
+              setTimeout(() => {
+                setCatState(prev => prev === 'hover-1' ? 'hover-2' : prev) // image_2
+              }, 150)
             }}
             onMouseLeave={() => {
-              setCatHovered(false)
-              if (!catPawing) {
-                setCatState('sleeping')
+              if (catState !== 'clicked') {
+                setCatState('idle')
               }
             }}
             onKeyDown={event => {
@@ -561,46 +576,35 @@ export default function App() {
                 handleCatTap()
               }
             }}
-            aria-label="Pixel art cat"
+            aria-label="Interactive cat"
           >
-            {(catState === 'sleeping' || catState === 'waking') && (
-              <div className={`pixel-cat-zz ${catState === 'waking' ? 'pixel-cat-zz-fade' : ''}`}>
+            {catState === 'idle' && (
+              <div className="pixel-cat-zz">
                 <span className="pixel-cat-z1">z</span>
                 <span className="pixel-cat-z2">z</span>
                 <span className="pixel-cat-z3">z</span>
               </div>
             )}
-
             <div className="pixel-cat-img-wrap">
               <img
-                src="/images/reference-cat.png"
+                src="/images/image_1.png"
                 alt=""
-                className="pixel-cat-sleep-img"
-                style={{ opacity: catState === 'sleeping' || catState === 'waking' ? 1 : 0 }}
+                style={{ opacity: catState === 'idle' ? 1 : 0 }}
               />
               <img
-                src="/images/reference-cat.png"
+                src="/images/image_3.png"
                 alt=""
-                className="pixel-cat-alert-img"
-                style={{ opacity: catState === 'alert' ? 1 : 0 }}
+                style={{ opacity: catState === 'hover-1' ? 1 : 0 }}
               />
               <img
-                src="/images/reference-cat.png"
+                src="/images/image_2.png"
                 alt=""
-                className="pixel-cat-blink-img"
-                style={{ opacity: catState === 'blinking' ? 1 : 0 }}
+                style={{ opacity: catState === 'hover-2' ? 1 : 0 }}
               />
               <img
-                src="/images/reference-cat.png"
+                src="/images/image_4.png"
                 alt=""
-                className="pixel-cat-paw-img"
-                style={{ opacity: catState === 'pawing' ? 1 : 0 }}
-              />
-              <img
-                src="/images/reference-cat.png"
-                alt=""
-                className="pixel-cat-awake-img"
-                style={{ opacity: catState === 'alert' || catState === 'waking' ? 1 : 0 }}
+                style={{ opacity: catState === 'clicked' ? 1 : 0 }}
               />
             </div>
           </button>
