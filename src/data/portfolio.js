@@ -35,6 +35,22 @@ export const experiences = [
     ],
   },
   {
+    company: "Dharmsinh Desai University",
+    companyUrl: "https://ddu.ac.in",
+    role: "Backend Engineer Intern",
+    type: "Internship",
+    location: "Nadiad, Gujarat, India · Remote",
+    period: "12.2025—04.2026",
+    tech: ["Java", "Spring Boot", "PostgreSQL", "AWS S3", "RabbitMQ", "OAuth 2.0", "JavaCV"],
+    points: [
+      "Built scalable backend services for a Video & Audio Redaction Platform using Java, Spring Boot, PostgreSQL, and AWS S3.",
+      "Developed secure REST APIs for video upload, ML-based object detection, ML-based sensitive audio detection, overlay editing, redaction jobs, and output downloads with OAuth 2.0 / OIDC authentication and authorization.",
+      "Implemented RabbitMQ + SSE for asynchronous processing and real-time job progress updates.",
+      "Integrated AWS S3 & pre-signed URLs for secure large-file upload, storage, and streaming.",
+      "Optimized video and audio redaction performance using JavaCV with frame-level processing.",
+    ],
+  },
+  {
     company: "Mastercard",
     companyUrl: "https://mastercard.com",
     role: "Software Engineer Intern",
@@ -122,7 +138,7 @@ export const skills = [
   "Spring Boot", "Apache Kafka", "Apache Spark", "Apache NiFi", "Apache Hadoop",
   "React", "Tailwind CSS", "WebSockets", "REST APIs",
   "PostgreSQL", "MongoDB", "MySQL", "Hibernate",
-  "Docker", "Kubernetes", "AWS S3", "Git", "Postman",
+  "Docker", "Kubernetes", "AWS S3", "RabbitMQ", "OAuth 2.0", "Git", "Postman",
 ]
 
 export const stackLogos = [

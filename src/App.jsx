@@ -28,6 +28,7 @@ import {
   SiKubernetes,
   SiGit,
   SiPostman,
+  SiRabbitmq,
 } from 'react-icons/si'
 import { personalInfo, experiences, education, projects, skills, hobbies } from './data/portfolio'
 import Magnetic from './components/ui/Magnetic'
@@ -78,6 +79,28 @@ function BenzingaMark({ className = '' }) {
         <span className="text-[9px] font-bold text-white leading-none font-sans tracking-tight">BZ</span>
       </span>
       <span>Benzinga</span>
+    </span>
+  )
+}
+
+function DDUMark({ className = '' }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 align-middle ${className}`}>
+      <span className="relative inline-flex h-3.5 w-[21px] items-center justify-center rounded-[3px] bg-black overflow-hidden flex-shrink-0">
+        <svg viewBox="0 0 100 100" className="h-[90%] w-[90%]">
+          {/* Outer D shape (White) */}
+          <path 
+            d="M20 10 V90 H50 C80 90 95 75 95 50 C95 25 80 10 50 10 H20 Z" 
+            fill="white" 
+          />
+          {/* Inner D shape (Orange) */}
+          <path 
+            d="M40 28 V72 H50 C65 72 75 62 75 50 C75 38 65 28 50 28 H40 Z" 
+            fill="#FF6B00" 
+          />
+        </svg>
+      </span>
+      <span>Dharmsinh Desai University</span>
     </span>
   )
 }
@@ -294,6 +317,8 @@ export default function App() {
     'Docker': SiDocker,
     'Kubernetes': SiKubernetes,
     'AWS S3': FaAws,
+    'RabbitMQ': SiRabbitmq,
+    'OAuth 2.0': ShieldCheck,
     'Git': SiGit,
     'Postman': SiPostman,
   }
@@ -429,7 +454,15 @@ export default function App() {
                 {experiences.map((exp, i) => (
                   <div key={i} className="border border-[color:var(--line)] rounded-[24px] p-4 md:p-5 bg-[color:var(--card-strong)]">
                     <a href={exp.companyUrl} target="_blank" rel="noopener noreferrer" className="text-base font-semibold hover:opacity-70 transition-opacity inline-flex items-center">
-                      {exp.company === 'Mastercard' ? <MastercardMark /> : exp.company === 'Benzinga' ? <BenzingaMark /> : exp.company}
+                      {exp.company === 'Mastercard' ? (
+                        <MastercardMark />
+                      ) : exp.company === 'Benzinga' ? (
+                        <BenzingaMark />
+                      ) : exp.company === 'Dharmsinh Desai University' ? (
+                        <DDUMark />
+                      ) : (
+                        exp.company
+                      )}
                     </a>
                     <div className="mt-1 mb-2.5 space-y-0.5">
                       <p className="mono text-xs text-[color:var(--muted)]">{exp.role}</p>
